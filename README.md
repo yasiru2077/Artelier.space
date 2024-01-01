@@ -1,1 +1,1 @@
-# Agrisync360
+# GardenPal's
