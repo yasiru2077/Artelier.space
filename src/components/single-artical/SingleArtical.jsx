@@ -1,9 +1,39 @@
-import React from "react";
+import React, { useRef } from "react";
+import './singleaction.css';
 
 export default function SingleArtical() {
+  const utteranceRef = useRef(null);
+
+  const handleClick = () => {
+    // Find the elements with class "article"
+    const articleElements = document.querySelectorAll(".article");
+
+    if (articleElements.length > 0) {
+      // Combine the text content of all article elements
+      const text = Array.from(articleElements)
+        .map((element) => element.textContent)
+        .join("\n");
+
+      const newUtterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.cancel(); // Cancel any ongoing speech
+      utteranceRef.current = newUtterance;
+      window.speechSynthesis.speak(newUtterance);
+    }
+  };
+
+  const handleStopClick = () => {
+    if (utteranceRef.current) {
+      window.speechSynthesis.cancel(); // Cancel the ongoing speech
+    }
+  };
   return (
     <div>
-      <article className="max-w-3xl mx-auto bg-white p-8 rounded shadow-md">
+      <article className="max-w-3xl mx-auto bg-white p-8 rounded shadow-md ml-3 mr-3">
+        <div className="flex flex-row pt-2 gap-2">
+            <span onClick={handleClick} class="material-symbols-outlined text-black hover:text-gray-600">play_circle</span>
+            <span onClick={handleStopClick} class="material-symbols-outlined  text-black hover:text-gray-600">stop_circle</span>
+        </div>
+        <div className="article">
         <h1 className="text-3xl font-bold mb-4">
           Spider Plant: A Houseplant Marvel
         </h1>
@@ -86,7 +116,8 @@ export default function SingleArtical() {
           vein that is lost as the leaf ages. The flower stalks are cream to
           yellowish instead of the normal green.
         </p>
-        {/* Continue adding your content */}
+        </div>
+       
       </article>
     </div>
   );

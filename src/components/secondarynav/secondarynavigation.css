@@ -1,0 +1,9 @@
+.material-symbols-outlined{
+    font-size: 30px;
+}
+
+.secondary-navigation{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}

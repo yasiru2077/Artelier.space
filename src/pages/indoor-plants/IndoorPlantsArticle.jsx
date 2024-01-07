@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SecondaryNav from '../../components/secondarynav/SecondaryNav';
 
 export default function IndoorPlantsArticle() {
   return (
+    <React.Fragment>
+    
     <div className="bg-gradient-to-b from-green-200 font-mono text-black to-green-400 min-h-screen p-8 flex flex-col items-center justify-center">
       <h1 className="text-5xl font-extrabold mb-8 text-black text-center">
         🌿 Transform Your Home with These Amazing Indoor Plants 🌿
@@ -24,6 +27,8 @@ export default function IndoorPlantsArticle() {
         Incorporating these indoor plants into your home not only enhances its aesthetic appeal but also promotes a healthier and more relaxing environment. Experiment with different combinations to create your own indoor oasis.
       </p>
     </div>
+    <SecondaryNav/>
+    </React.Fragment>
   );
 }
 

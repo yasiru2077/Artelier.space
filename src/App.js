@@ -8,6 +8,8 @@ import ArticalPage from "./pages/artial/ArticalPage";
 
 
 function App() {
+
+  
   return (
    <Router>
     <Routes>
@@ -16,6 +18,7 @@ function App() {
     <Route path="/HomePage" element={<HomePage/>}/>
     <Route path="/indoor-plants" element={<IndoorPlantsArticle/>}/>
     <Route path="/indoor-plants/spider-plant" element={<ArticalPage/>}></Route>
+    
     </Routes>
    </Router>
   );
