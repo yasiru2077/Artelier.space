@@ -5,17 +5,17 @@ export default function SingleArtical() {
   const utteranceRef = useRef(null);
 
   const handleClick = () => {
-    // Find the elements with class "article"
+   
     const articleElements = document.querySelectorAll(".article");
 
     if (articleElements.length > 0) {
-      // Combine the text content of all article elements
+     
       const text = Array.from(articleElements)
         .map((element) => element.textContent)
         .join("\n");
 
       const newUtterance = new SpeechSynthesisUtterance(text);
-      window.speechSynthesis.cancel(); // Cancel any ongoing speech
+      window.speechSynthesis.cancel(); 
       utteranceRef.current = newUtterance;
       window.speechSynthesis.speak(newUtterance);
     }
@@ -23,7 +23,7 @@ export default function SingleArtical() {
 
   const handleStopClick = () => {
     if (utteranceRef.current) {
-      window.speechSynthesis.cancel(); // Cancel the ongoing speech
+      window.speechSynthesis.cancel(); 
     }
   };
   return (
