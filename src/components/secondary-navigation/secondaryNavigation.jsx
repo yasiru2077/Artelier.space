@@ -1,5 +1,6 @@
 import React from 'react'
 import './secondary-navigation.css';
+import { Link } from 'react-router-dom';
 
 export default function secondaryNavigation() {
   return (
@@ -10,7 +11,9 @@ export default function secondaryNavigation() {
                 <span className="material-symbols-outlined">home</span>
               </li>
               <li>
-                <span className="material-symbols-outlined">yard</span>
+               
+                <span style={{cursor:'pointer'}} className="material-symbols-outlined">yard</span>
+             
               </li>
               <li>
                 <span className="material-symbols-outlined">potted_plant</span>
