@@ -1,6 +1,8 @@
 import express from "express";
 const app = express();
 
+import authRoutes from "./routes/auth.js";
+
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -23,7 +25,7 @@ app.use(
 
 app.use(cookieParser());
 
-// app.use("/api/auth")
+app.use("/api/auth", authRoutes);
 
 app.listen(port, () => {
   console.log(`API working on ${port}`);
