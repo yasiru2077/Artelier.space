@@ -78,7 +78,13 @@ export const editArtist = async (req, res) => {
     // Update artist
     const updateQuery =
       "UPDATE artists SET name = ?, biography = ?, email = ?, website = ? WHERE artist_id = ?";
-    const values = [name, biography || null, email || null, website || null, id];
+    const values = [
+      name,
+      biography || null,
+      email || null,
+      website || null,
+      id,
+    ];
 
     const data = await query(updateQuery, values);
 
