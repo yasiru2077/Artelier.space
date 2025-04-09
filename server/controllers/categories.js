@@ -19,7 +19,7 @@ export const addCategories = async (req, res) => {
 
     return res.status(201).json({
       message: "category added successfully",
-      artist_id: data.insertId,
+      category_id: data.insertId,
     });
   } catch (error) {
     console.error(error);
@@ -62,7 +62,7 @@ export const editCategories = async (req, res) => {
     const updateQ =
       "update categories set name=?, description=? where category_id =?";
 
-    const values = [name, description || null];
+    const values = [name, description || null, id];
 
     const data = await query(updateQ, values);
 
@@ -76,26 +76,41 @@ export const editCategories = async (req, res) => {
   }
 };
 
+
 export const deleteCategories = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // Check if artist exists
+    // Check if category exists
     const checkData = await query(
       "SELECT * FROM categories WHERE category_id = ?",
       [id]
     );
 
     if (checkData.length === 0) {
-      return res.status(404).json({ error: "Artist not found" });
+      return res.status(404).json({ error: "Category not found" });
     }
 
-    // Delete artist
+    // Check if category is referenced by any artworks
+    const artworksCheck = await query(
+      "SELECT COUNT(*) as count FROM artworks WHERE category_id = ?",
+      [id]
+    );
+
+    if (artworksCheck[0].count > 0) {
+      return res.status(400).json({
+        error:
+          "Cannot delete category because it's associated with existing artworks",
+        artworksCount: artworksCheck[0].count,
+      });
+    }
+
+    // Delete category if not referenced
     const deleteQuery = "DELETE FROM categories WHERE category_id = ?";
     const data = await query(deleteQuery, [id]);
 
     return res.status(200).json({
-      message: "Artist deleted successfully",
+      message: "Category deleted successfully",
       affected: data.affectedRows,
     });
   } catch (error) {

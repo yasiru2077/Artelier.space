@@ -4,6 +4,9 @@ const app = express();
 import authRoutes from "./routes/auth.js";
 import artistRoutes from "./routes/artist.js";
 import categoriesRoutes from "./routes/categories.js";
+import artworkRoutes from "./routes/artworks.js";
+import ordersRoutes from "./routes/orders.js";
+import orderItemsRoutes from "./routes/orderItems.js";
 
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -30,6 +33,9 @@ app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/artist", artistRoutes);
 app.use("/api/categories", categoriesRoutes);
+app.use("/api/artworks", artworkRoutes);
+app.use("/api/order", ordersRoutes);
+app.use("/api/orderItems", orderItemsRoutes);
 
 app.listen(port, () => {
   console.log(`API working on ${port}`);
