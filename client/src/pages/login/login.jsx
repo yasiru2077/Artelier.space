@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from "../../redux/slices/authSlice";
 
 function Login() {
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector((state) => state.auth);
 
   const [err, setErr] = useState(null);
 
@@ -21,6 +30,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    dispatch(loginStart());
 
     try {
       const response = await axios.post(
@@ -32,11 +42,13 @@ function Login() {
       );
 
       const userData = response.data;
-      console.log(userData);
-
+      dispatch(loginSuccess(userData));
+      console.log("Login successful:", userData);
+      
       navigate("/");
     } catch (err) {
       setErr(err.response?.data || "An error occurred");
+      dispatch(loginFailure(err.response?.data || "An error occurred"));
     }
   };
 
@@ -59,7 +71,9 @@ function Login() {
           onChange={handleChange}
           autoComplete="new-password"
         />
-        <button type="submit">login</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
         {err && <p className="error">{err}</p>}
       </form>
     </div>
