@@ -9,6 +9,7 @@ import {
 import Register from "./pages/register/register";
 import Login from "./pages/login/login";
 import Home from "./pages/home/home";
+import Layout from "./content/layout";
 
 function App() {
   return (
@@ -17,6 +18,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+        </Route>
       </Routes>
     </Router>
   );
