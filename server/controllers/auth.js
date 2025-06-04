@@ -88,12 +88,14 @@ export const logout = (req, res) => {
 export const verify = async (req, res) => {
   try {
     // Get user from database using the ID from verifyToken middleware
-    const q = await query("SELECT * FROM users WHERE id = ?", [req.userId]);
-    
+    const q = await query("SELECT * FROM users WHERE user_id = ?", [
+      req.userId,
+    ]);
+
     if (q.length === 0) {
       return res.status(404).json("User not found!");
     }
-    
+
     // Remove password from response
     const { password, ...userWithoutPassword } = q[0];
     return res.status(200).json(userWithoutPassword);
