@@ -3,10 +3,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import SecondaryNavigation from "../../content/nav-bar/secondary-navigation";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -18,6 +21,8 @@ function Home() {
         }
       );
       dispatch(logout());
+
+      navigate("/login");
     } catch (error) {
       console.error("Logout error:", error);
       // Still dispatch logout to clear local state
@@ -38,33 +43,33 @@ function Home() {
     <div>
       <SecondaryNavigation />
       <h1>Welcome to Your Art Gallery</h1>
-      {/* <div className="user-info">
+      <div className="user-info">
         <h2>User Information</h2>
         <p>
-          <strong>ID:</strong> {user.user_id}
+          <strong>ID:</strong> {user?.user_id}
         </p>
         <p>
-          <strong>Username:</strong> {user.username}
+          <strong>Username:</strong> {user?.username}
         </p>
         <p>
-          <strong>Email:</strong> {user.email}
+          <strong>Email:</strong> {user?.email}
         </p>
         <p>
-          <strong>Full Name:</strong> {user.first_name} {user.last_name}
+          <strong>Full Name:</strong> {user?.first_name} {user?.last_name}
         </p>
         <p>
-          <strong>Role:</strong> {user.role}
+          <strong>Role:</strong> {user?.role}
         </p>
         <p>
           <strong>Member Since:</strong>{" "}
-          {new Date(user.created_at).toLocaleDateString()}
+          {new Date(user?.created_at).toLocaleDateString()}
         </p>
 
         <button onClick={handleLogout} className="logout-btn">
           Logout
         </button>
-      </div> */}
-      
+      </div>
+      <div></div>
     </div>
   );
 }

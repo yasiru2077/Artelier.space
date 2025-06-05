@@ -59,7 +59,7 @@ export const login = async (req, res) => {
       return res.status(400).json("Wrong password or username!");
     }
 
-    const token = jwt.sign({ id: q[0].id }, "key");
+    const token = jwt.sign({ id: q[0].user_id }, "key");
 
     const { password, ...userWithoutPassword } = q[0];
 
@@ -87,7 +87,7 @@ export const logout = (req, res) => {
 
 export const verify = async (req, res) => {
   try {
-    // Get user from database using the ID from verifyToken middleware
+    // Use user_id column name
     const q = await query("SELECT * FROM users WHERE user_id = ?", [
       req.userId,
     ]);
@@ -97,7 +97,7 @@ export const verify = async (req, res) => {
     }
 
     // Remove password from response
-    const { password, ...userWithoutPassword } = q[0];
+    const { password_hash, ...userWithoutPassword } = q[0];
     return res.status(200).json(userWithoutPassword);
   } catch (err) {
     console.error(err);

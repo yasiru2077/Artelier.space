@@ -36,7 +36,7 @@ function ProtectedRoute() {
 
   console.log("is authenticated:", isAuthenticated);
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/" replace />;
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 }
 
 export default ProtectedRoute;
