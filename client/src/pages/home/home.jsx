@@ -41,7 +41,7 @@ function Home() {
 
   return (
     <div>
-      <SecondaryNavigation />
+      {/* <SecondaryNavigation /> */}
       <h1>Welcome to Your Art Gallery</h1>
       <div className="user-info">
         <h2>User Information</h2>
