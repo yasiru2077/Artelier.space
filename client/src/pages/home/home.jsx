@@ -1,12 +1,19 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import SecondaryNavigation from "../../content/nav-bar/secondary-navigation";
 import { useNavigate } from "react-router-dom";
+import {
+  ArtListLoading,
+  ArtListSuccess,
+  ArtListFailure,
+} from "../../redux/slices/artSlice";
 
 function Home() {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { dataList, loading, error } = useSelector((state) => state.art);
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -29,6 +36,27 @@ function Home() {
       dispatch(logout());
     }
   };
+
+  const fetchPainting = async () => {
+    dispatch(ArtListLoading());
+    try {
+      const response = await axios.get("http://localhost:3000/api/artworks", {
+        withCredentials: true,
+      });
+
+      const artData = response.data;
+
+      dispatch(ArtListSuccess(artData));
+      console.log(artData);
+    } catch (error) {
+      console.error("artDataList error:", error);
+      dispatch(ArtListFailure(error.message));
+    }
+  };
+
+  useEffect(() => {
+    fetchPainting();
+  }, []);
 
   // if (!isAuthenticated) {
   //   return (
@@ -69,7 +97,32 @@ function Home() {
           Logout
         </button>
       </div>
-      <div></div>
+      <div>
+        <div>
+          <div>
+            <h2>Your Artworks</h2>
+
+            {loading && <p>Loading artworks...</p>}
+
+            {error && <p style={{ color: "red" }}>Error: {error}</p>}
+
+            {!loading && !error && (
+              <div>
+                {dataList?.length === 0 ? (
+                  <p>No artworks found.</p>
+                ) : (
+                  dataList?.map((d) => (
+                    <div key={d?.artwork_id}>
+                      <h6>{d?.title}</h6>
+                      <p>{d?.medium}</p>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,9 @@
 import React from "react";
 
 function MainNavigation() {
-  return <div>MainNavigation</div>;
+  return <section className="main-navigation">
+    
+  </section>;
 }
 
 export default MainNavigation;
