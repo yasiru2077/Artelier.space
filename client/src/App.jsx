@@ -12,6 +12,8 @@ import Home from "./pages/home/home";
 import Layout from "./content/layout";
 import ProtectedRoute from "./protected-route";
 
+import "./App.css";
+
 function App() {
   return (
     <Router>
