@@ -6,11 +6,31 @@ function MainNavigation() {
   return (
     <section className="main-navigation">
       <div>
-        <img src={logo} alt="logo" />
+        <div>
+          <img src={logo} alt="logo" />
+          <div>
+            <input
+              className="search"
+              maxlength="120"
+              // size="40"
+              type="text"
+              placeholder="Search by artist name, title or medium"
+            />
+          </div>
+        </div>
+
+        <div>
+          <button className="login-btn">Log In</button>
+          <button className="register-btn">Register</button>
+        </div>
       </div>
-      <div>
-        <button>login</button>
-        <button>register</button>
+      <div className="nav-links">
+        <ul>
+          <li>What's new</li>
+          <li>Artworks</li>
+          <li>Artists</li>
+          <li>Buy</li>
+        </ul>
       </div>
     </section>
   );
