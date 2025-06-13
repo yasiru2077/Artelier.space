@@ -2,14 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
-function ProtectedRoute() {
-  const [isAuthenticated, setIsAuthenticated] = useState(() =>
-    localStorage.getItem("isAuthenticated")
-  );
-
-  useEffect(() => {
-    localStorage.setItem("isAuthenticated", isAuthenticated ? "true" : "false");
-  }, [isAuthenticated]);
+function ProtectedRoute({ isAuthenticated, setIsAuthenticated }) {
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const verifyAuth = async () => {
@@ -28,11 +22,21 @@ function ProtectedRoute() {
         console.log("Authentication failed:", error);
         setIsAuthenticated(false);
         localStorage.removeItem("isAuthenticated");
+      } finally {
+        setLoading(false);
       }
     };
 
     verifyAuth();
   }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <h3>Loading...</h3>
+      </div>
+    );
+  }
 
   console.log("is authenticated:", isAuthenticated);
 
